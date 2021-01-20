@@ -1,5 +1,8 @@
 from django.db import models
 
+#managers Autor
+from .managers import AutorManager
+
 # Create your models here.
 class Autor(models.Model):
     """Model definition for Autor."""
@@ -7,6 +10,8 @@ class Autor(models.Model):
     apellidos = models.CharField( max_length=50)
     nacionalidad = models.CharField( max_length=30)
     edad = models.PositiveIntegerField()
+
+    objects = AutorManager()
 
     class Meta:
         """Meta definition for Autor."""
@@ -16,4 +21,4 @@ class Autor(models.Model):
 
     def __str__(self):
         """Unicode representation of Autor."""
-        return self.nombre + '-' + self.apellidos 
+        return self.nombre + ' - ' + self.apellidos 
