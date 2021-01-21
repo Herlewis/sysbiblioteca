@@ -2,6 +2,8 @@ from django.db import models
 
 from applications.libro.models import Libro
 
+from .managers import PrestamoManager
+
 
 class Lector(models.Model):
     """Model definition for Lector."""
@@ -26,10 +28,12 @@ class prestamo(models.Model):
     """Model definition for prestamo."""
 
     lector = models.ForeignKey(Lector, on_delete=models.CASCADE)
-    libro = models.ForeignKey(Libro, on_delete=models.CASCADE)
+    libro = models.ForeignKey(Libro, on_delete=models.CASCADE, related_name='libro_prestamo')
     fecha_prestamo = models.DateField()
     fecha_devolucion = models.DateField(blank=True, null=True)
     devuelto = models.BooleanField()
+
+    objects = PrestamoManager()
     
 
     class Meta:

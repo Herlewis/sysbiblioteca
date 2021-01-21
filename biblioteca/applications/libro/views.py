@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 #models local
 from .models import Libro 
@@ -21,6 +21,11 @@ class ListLibros(ListView):
             return Libro.objects.listar_libros2(palabra_clave, f1, f2)
         else:
             return Libro.objects.listar_libros(palabra_clave)
+
+
+class LibroDetailView(DetailView):
+    model = Libro
+    template_name = "libro/detalle.html"
 
 
         

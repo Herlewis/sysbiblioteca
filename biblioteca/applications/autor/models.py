@@ -21,4 +21,4 @@ class Autor(models.Model):
 
     def __str__(self):
         """Unicode representation of Autor."""
-        return self.nombre + ' - ' + self.apellidos 
+        return str(self.id) +'-'+ self.nombre + ' - ' + self.apellidos 
