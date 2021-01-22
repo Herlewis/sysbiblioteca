@@ -4,14 +4,26 @@ from django.db import models
 from .managers import AutorManager
 
 # Create your models here.
-class Autor(models.Model):
+class Persona(models.Model):
     """Model definition for Autor."""
-    nombre = models.CharField( max_length=50)
+    nombres = models.CharField( max_length=50)
     apellidos = models.CharField( max_length=50)
     nacionalidad = models.CharField( max_length=30)
     edad = models.PositiveIntegerField()
 
-    objects = AutorManager()
+    
+    class Meta:
+        """Meta definition for Autor."""
+
+        abstract = True
+
+    def __str__(self):
+        """Unicode representation of Autor."""
+        return str(self.id) +'-'+ self.nombres + ' - ' + self.apellidos 
+
+class Autor(Persona):
+
+    objects = AutorManager()    
 
     class Meta:
         """Meta definition for Autor."""
@@ -19,6 +31,5 @@ class Autor(models.Model):
         verbose_name = 'Autor'
         verbose_name_plural = 'Autores'
 
-    def __str__(self):
-        """Unicode representation of Autor."""
-        return str(self.id) +'-'+ self.nombre + ' - ' + self.apellidos 
+   
+
