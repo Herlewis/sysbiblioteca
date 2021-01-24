@@ -1,5 +1,9 @@
 from django.db import models
 from applications.autor.models import Autor
+from django.db.models.signals import post_save
+
+#app terceros
+from PIL import Image
 
 #Managers
 from .managers import LibroManager, CategoriaManager
@@ -35,6 +39,7 @@ class Libro(models.Model):
     fecha = models.DateField('Fecha de lanzamiento')
     portada = models.ImageField( upload_to='portada', null=True)
     visitas = models.PositiveIntegerField()
+    stock = models.PositiveIntegerField(default=0)
 
 
     objects = LibroManager()
@@ -49,5 +54,10 @@ class Libro(models.Model):
         """Unicode representation of Libro."""
         return str(self.id) + ' - ' + self.titulo
 
+def optimize_image(sender, instance, **kwargs):
+    if instance.portada:
+        portada = Image.open(instance.portada.path)
+        portada.save(instance.portada.path, quality=20, optimize=True)
 
+post_save.connect(optimize_image, sender=Libro)
 # Create your models here.
